@@ -1,8 +1,6 @@
 class World {
     character = new Character();
-    enemies = level1.enemies;
-    barriers = level1.barriers;
-    backgroundObjects = level1.backgroundObjects;
+    level = level1;
     canvas;
     ctx;
     keyboard;
@@ -29,8 +27,8 @@ class World {
 
         this.drawBackground();
         this.addToMap(this.character);
-        this.addObjectsToMap(this.enemies);
-        this.addObjectsToMap(this.barriers);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.barriers);
         
         this.ctx.translate(-this.camera_x, 0);
 
@@ -56,7 +54,7 @@ class World {
 
     for (let x = startX; x < -this.camera_x + totalWidth; x += backgroundWidth) {
         // Bild im Wechsel auswählen
-        let obj = this.backgroundObjects[segmentIndex % this.backgroundObjects.length];
+        let obj = this.level.backgroundObjects[segmentIndex % this.level.backgroundObjects.length];
         this.ctx.drawImage(obj.img, x, obj.y, obj.width, obj.height);
 
         segmentIndex++;

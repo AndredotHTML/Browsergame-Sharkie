@@ -20,4 +20,12 @@ class MovableObject {
             this.imageCache[path] = img;
         });
     }
+
+    playAnimation(imgs) {
+        let i = this.currentImage % imgs.length;
+            let path = imgs[i];
+            this.img = this.imageCache[path];
+            console.log("Aktuelles Bild:", path, this.img);
+            this.currentImage++;
+    }
 }

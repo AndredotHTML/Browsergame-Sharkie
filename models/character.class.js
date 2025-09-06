@@ -24,7 +24,7 @@ class Character extends MovableObject {
                     'Assets/img_sharkie/1.Sharkie/1.IDLE/17.png',
                     'Assets/img_sharkie/1.Sharkie/1.IDLE/18.png',
                     ];
-    IMAGES_SWIMMING = [ 
+    IMAGES_SWIM = [ 
                     'Assets/img_sharkie/1.Sharkie/3.Swim/1.png',
                     'Assets/img_sharkie/1.Sharkie/3.Swim/2.png',
                     'Assets/img_sharkie/1.Sharkie/3.Swim/3.png',
@@ -39,7 +39,7 @@ class Character extends MovableObject {
     constructor() {
         super().loadImage('Assets/img_sharkie/1.Sharkie/1.IDLE/1.png');
         this.loadImages(this.IMAGES_IDLE);
-        this.loadImages(this.IMAGES_SWIMMING);
+        this.loadImages(this.IMAGES_SWIM);
 
         this.animate();
 
@@ -49,7 +49,7 @@ class Character extends MovableObject {
     animate() {
 
     setInterval(() => {
-    if (this.world.keyboard.RIGHT) {
+    if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
     this.x += this.speed;
     this.otherDirection = false;
     }
@@ -64,7 +64,7 @@ class Character extends MovableObject {
         this.y += this.speed;
     }
 
-    this.world.camera_x = -this.x;
+    this.world.camera_x = -this.x + 80;
     if (this.world.camera_x > 0) {
         this.world.camera_x = 0; 
     }
@@ -77,16 +77,10 @@ class Character extends MovableObject {
             !this.world.keyboard.RIGHT) 
         {
             // idle animation
-            let i = this.currentImage % this.IMAGES_IDLE.length;
-            let path = this.IMAGES_IDLE[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            this.playAnimation(this.IMAGES_IDLE)
         } else {
             // swimming animation
-            let i = this.currentImage % this.IMAGES_SWIMMING.length;
-            let path = this.IMAGES_SWIMMING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            this.playAnimation(this.IMAGES_SWIM)
         }
     }, 110);
 }
