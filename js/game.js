@@ -8,11 +8,6 @@ function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
     
-
-
-    console.log("My Character is", world.character);
-    
- 
 }
 
 
@@ -32,8 +27,8 @@ window.addEventListener('keydown', (event) => {
     if (event.code === 'Space') {
         keyboard.SPACE = true;
     }
-    console.log(keyboard);
     
+
 })
 
 

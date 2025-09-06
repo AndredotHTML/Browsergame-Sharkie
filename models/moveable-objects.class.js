@@ -20,18 +20,4 @@ class MovableObject {
             this.imageCache[path] = img;
         });
     }
-
-    moveRight() {
-        console.log('moving right');   
-    }
-
-    moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 60);
-    }
-
-    moveUp(){
-
-    }
 }

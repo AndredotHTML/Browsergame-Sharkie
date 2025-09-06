@@ -7,10 +7,7 @@ class Barrier extends MovableObject {
         super().loadImage('Assets/img_sharkie/3. Background/Barrier/1.png');
 
         this.x = 300;
-        this.animate()
     }
 
-    animate() {
-        this.moveLeft()
-    }
+    
 }

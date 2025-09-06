@@ -1,20 +1,12 @@
 class World {
     character = new Character();
-    enemies = [
-    new PufferFish(),
-    new PufferFish(),
-    new PufferFish()
-    ];
-    barriers = [
-        new Barrier()
-    ];
-    backgroundObjects = [
-        new BackgroundObject('Assets/img_sharkie/3. Background/Dark/1.png', 0),
-        new BackgroundObject('Assets/img_sharkie/3. Background/Dark/2.png', 719)
-    ]
+    enemies = level1.enemies;
+    barriers = level1.barriers;
+    backgroundObjects = level1.backgroundObjects;
     canvas;
     ctx;
     keyboard;
+    camera_x = -100;
 
     constructor(canvas, keyboard){
         this.ctx = canvas.getContext('2d');
@@ -33,12 +25,15 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
-        this.addObjectsToMap(this.backgroundObjects);
+        this.ctx.translate(this.camera_x, 0);
+
+        this.drawBackground();
         this.addToMap(this.character);
         this.addObjectsToMap(this.enemies);
         this.addObjectsToMap(this.barriers);
         
-        
+        this.ctx.translate(-this.camera_x, 0);
+
 
 
         //Draw() wird immer wieder aufgerufen 
@@ -48,6 +43,26 @@ class World {
         });
 
     }
+
+    drawBackground() {
+    let backgroundWidth = 720; // Breite eines Segments
+    let totalWidth = this.canvas.width;
+
+    // Startpunkt: Kamera-Ausrichtung
+    let startX = Math.floor(-this.camera_x / backgroundWidth) * backgroundWidth;
+
+    // Index: welches Segment (0=erstes Bild, 1=zweites Bild usw.)
+    let segmentIndex = Math.floor(-this.camera_x / backgroundWidth);
+
+    for (let x = startX; x < -this.camera_x + totalWidth; x += backgroundWidth) {
+        // Bild im Wechsel auswählen
+        let obj = this.backgroundObjects[segmentIndex % this.backgroundObjects.length];
+        this.ctx.drawImage(obj.img, x, obj.y, obj.width, obj.height);
+
+        segmentIndex++;
+    }
+    }
+    
 
     addObjectsToMap(objects) {
         objects.forEach(o => {
